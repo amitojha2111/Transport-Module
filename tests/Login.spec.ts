@@ -7,7 +7,7 @@ test("Navigation to URL", async ({ page }) => {
   console.log("Navigated to URL successfully");
 });
 
-test.only("To Check valid login", async ({ page }) => {
+test("To Check valid login", async ({ page }) => {
   let loginPage = new LoginPage(page);
   await loginPage.navigateToUrl();
   //await page.waitForURL();
