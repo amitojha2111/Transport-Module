@@ -7,7 +7,7 @@ export class LoginPage {
   readonly loginButton: Locator;
   readonly errorMessage: Locator;
   readonly rememberMeCheckbox: Locator;
-  readonly dashboard: Locator;
+  readonly loggedInConfirmation: Locator;
   readonly usernamefield: Locator;
   readonly passwordfield: Locator;
 
@@ -18,18 +18,17 @@ export class LoginPage {
     this.loginButton = page.locator("input[name='login']");
     this.errorMessage = page.locator(".alert-danger");
     this.rememberMeCheckbox = page.locator("#rememberMe");
-    this.dashboard = page.getByTitle("Dashboard");
-    //this.usernamefield = page.getByText("Username is required.");
+    this.loggedInConfirmation = page
+      .locator("h6")
+      .filter({ hasText: "Dashboard" })
+      .first();
     this.usernamefield = page.locator("#err-username");
-    // //this.usernamefield = page.getByRole("alert", {
-    //   name: "Username is required.",
-    // });
     this.passwordfield = page.locator("#err-password");
   }
 
   async navigateToUrl(): Promise<void> {
     await this.page.goto(
-      "https://gateway.ampersandgroup.in/realms/ampersand-internal/protocol/openid-connect/auth?client_id=hubbleorion-transport&scope=openid%20email%20profile&response_type=code&redirect_uri=https%3A%2F%2Ftransport-hubbleorion.hubblehox.com%2Fapi%2Fauth%2Fcallback%2Fkeycloak&state=rrTlQNz5YrNIJnUqUIP3rXH7bXPIRPHRLWrm4YyMKkE&code_challenge=Koq7ALGrEl1m4feGfW3QRPq4IFkq2nnaAtLOcLRCNsY&code_challenge_method=S256",
+      "https://preprod-transport-hubbleorion.hubblehox.com/",
     );
   }
 
@@ -41,9 +40,13 @@ export class LoginPage {
     await this.passwordInput.fill(password);
   }
 
-  async clickOnLoginButton(): Promise<void> {
+  async Login(): Promise<void> {
     await this.loginButton.click();
-    //await expect(this.dashboard).toContainText(DashboardTitle);
+  }
+
+  async loggedIn(logginConfirmation: string): Promise<void> {
+    //await this.page.waitForURL(/\/hubbleorion.hubblehox.com/);
+    await expect(this.loggedInConfirmation).toHaveText(logginConfirmation);
   }
 
   async ToCheckErrorMessage(errorpopup: string): Promise<void> {
