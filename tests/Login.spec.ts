@@ -7,7 +7,7 @@ test("Navigation to URL", async ({ page }) => {
   console.log("Navigated to URL successfully");
 });
 
-test.only("To Check valid login", async ({ page }) => {
+test("To Check valid login", async ({ page }) => {
   let loginPage = new LoginPage(page);
   await loginPage.navigateToUrl();
   //await page.waitForURL();
@@ -41,7 +41,7 @@ test("To check validation message is diplayed for Password field when left blank
 }) => {
   let loginPage = new LoginPage(page);
   await loginPage.navigateToUrl();
-  await loginPage.EnterUsername("dhiraj.katarki@vgos.org");
+  await loginPage.EnterUsername(process.env.TEST_USERNAME!);
   await loginPage.Login();
   await loginPage.passwordfieldrequires("⚠Password is required.");
 });
