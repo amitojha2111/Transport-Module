@@ -31,7 +31,7 @@ test("To check validation message is diplayed for Username field when left blank
 }) => {
   let loginPage = new LoginPage(page);
   await loginPage.navigateToUrl();
-  await loginPage.EnterPassword(process.env.PASSWORD!);
+  await loginPage.EnterPassword(process.env.TEST_PASSWORD!);
   await loginPage.Login();
   await loginPage.usernamefieldrequires("⚠Username is required.");
 });
