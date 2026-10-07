@@ -29,16 +29,34 @@ export class LoginPage {
   async navigateToUrl(): Promise<void> {
     await this.page.goto(
       "https://preprod-transport-hubbleorion.hubblehox.com/",
+      { waitUntil: "networkidle" }, // Add this
     );
+    // Wait for username input to be visible
+    await this.usernameInput.waitFor({ state: "visible", timeout: 10000 });
   }
+  // async navigateToUrl(): Promise<void> {
+  //   await this.page.goto(
+  //     "https://preprod-transport-hubbleorion.hubblehox.com/",
+  //   );
+  // }
 
   async EnterUsername(username: string): Promise<void> {
+    await this.usernameInput.waitFor({ state: "visible", timeout: 10000 });
     await this.usernameInput.fill(username);
   }
 
   async EnterPassword(password: string): Promise<void> {
+    await this.passwordInput.waitFor({ state: "visible", timeout: 10000 });
     await this.passwordInput.fill(password);
   }
+
+  // async EnterUsername(username: string): Promise<void> {
+  //   await this.usernameInput.fill(username);
+  // }
+
+  // async EnterPassword(password: string): Promise<void> {
+  //   await this.passwordInput.fill(password);
+  // }
 
   async Login(): Promise<void> {
     await this.loginButton.click();
