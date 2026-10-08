@@ -9,19 +9,41 @@ test("Navigation to URL", async ({ page }) => {
 
 test("To Check valid login", async ({ page }) => {
   let loginPage = new LoginPage(page);
+
   await loginPage.navigateToUrl();
-  //await page.waitForURL();
+
+  console.log("URL:", page.url());
+  console.log(
+    "Username count:",
+    await page.locator("input[name='username']").count(),
+  );
+  console.log(
+    "Password count:",
+    await page.locator("input[name='password']").count(),
+  );
+
   await loginPage.EnterUsername(process.env.TEST_USERNAME!);
   await loginPage.EnterPassword(process.env.TEST_PASSWORD!);
+
   await loginPage.Login();
   await loginPage.loggedIn("Dashboard");
 });
 
+// test("To Check valid login", async ({ page }) => {
+//   let loginPage = new LoginPage(page);
+//   await loginPage.navigateToUrl();
+//   //await page.waitForURL();
+//   await loginPage.EnterUsername(process.env.TEST_USERNAME!);
+//   await loginPage.EnterPassword(process.env.TEST_PASSWORD!);
+//   await loginPage.Login();
+//   await loginPage.loggedIn("Dashboard");
+// });
+
 test("To Check InValid login", async ({ page }) => {
   let loginPage = new LoginPage(page);
   await loginPage.navigateToUrl();
-  await loginPage.EnterUsername("dhir.katarki@vgos.org");
-  await loginPage.EnterPassword("Morning@2026");
+  await loginPage.EnterUsername("invalid@invalid.com");
+  await loginPage.EnterPassword("Invalid@123456");
   await loginPage.Login();
   await loginPage.ToCheckErrorMessage("Invalid username or password");
 });
