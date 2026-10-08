@@ -29,10 +29,10 @@ export class LoginPage {
   async navigateToUrl(): Promise<void> {
     await this.page.goto(
       "https://preprod-transport-hubbleorion.hubblehox.com/",
-      { waitUntil: "networkidle" }, // Add this
+      { waitUntil: "domcontentloaded" }, // Add this
     );
     // Wait for username input to be visible
-    await this.usernameInput.waitFor({ state: "visible", timeout: 10000 });
+    await this.usernameInput.waitFor({ state: "visible", timeout: 15000 });
   }
 
   // async navigateToUrl(): Promise<void> {
