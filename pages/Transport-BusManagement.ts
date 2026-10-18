@@ -18,6 +18,11 @@ export class BusManagement {
   // fields in Bus Management screen
   readonly SearchOption: Locator;
 
+  readonly datagrid: Locator;
+  readonly datarows: Locator;
+
+  readonly rowsperpage: Locator;
+
   constructor(page: Page) {
     this.page = page;
     this.transportOverview = page.getByRole("button", {
@@ -37,6 +42,12 @@ export class BusManagement {
     this.BusNumber = page.locator("//input [@name ='bus_number' ]");
     this.ChasisNumber = page.locator("//input[@name = 'chassis_no'] ");
     this.GpsDevicePlatform = page.locator("#gps-device-platform");
+
+    this.datagrid = page.getByRole("grid");
+    this.datarows = page.getByRole("grid").locator(".MuiDataGrid-row");
+
+    //
+    this.rowsperpage = page.locator("//div[@aria-haspopup = 'listbox']").nth(1);
 
     this.SearchOption = page.getByPlaceholder(
       "Search for Bus Number, Bus Type & Bus Capacity",
@@ -81,6 +92,37 @@ export class BusManagement {
   async GPSDevice(SelectGPS: string) {
     await this.GpsDevicePlatform.click();
     await this.page.getByRole("option", { name: SelectGPS }).click();
+  }
+
+  async GPSID(): Promise<void> {}
+
+  async BusCapacity(): Promise<void> {}
+
+  async BusType(): Promise<void> {}
+
+  async WifiName(): Promise<void> {}
+
+  async WifiIdentification(): Promise<void> {}
+
+  async ManualCode(): Promise<void> {}
+
+  // To check total columns and rows in data grid
+  async datatablecolumncount(): Promise<void> {
+    const rowscount = await this.datarows;
+    const totalrowscount = await rowscount.count();
+    console.log(totalrowscount);
+    await expect(this.datarows).toHaveCount(10);
+    await this.rowsperpage.click();
+    await this.page.getByRole("option", { name: "25" }).click();
+    const aftefiltercount = await rowscount.count();
+    console.log(aftefiltercount);
+    await expect(this.datarows).toHaveCount(25);
+  }
+
+  async datatable(): Promise<void> {
+    const conunt = await this.datagrid.locator(".MuiDataGrid-columnHeader");
+    const totalcount = await conunt.count();
+    console.log(totalcount);
   }
 }
 
