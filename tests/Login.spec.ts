@@ -1,9 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/loginPage.spec";
+import { LoginPage } from "../pages/loginPage";
 import process from "process";
 import { LoginTestData } from "../test-data/LoginData";
 
-//test.describe("All Login cases", () => {
 test("Navigation to URL", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.navigateToUrl();

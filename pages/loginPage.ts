@@ -1,4 +1,5 @@
 import { test, Page, expect, Locator } from "@playwright/test";
+//import { BasePage } from "../utils/BasePage";
 
 export class LoginPage {
   readonly page: Page;
@@ -11,6 +12,7 @@ export class LoginPage {
   readonly usernamefield: Locator;
   readonly passwordfield: Locator;
 
+  // Why use GetByRole -- It is used for Autoheal
   constructor(page: Page) {
     this.page = page;
     this.usernameInput = page.locator("input[name='username']");
@@ -34,23 +36,8 @@ export class LoginPage {
     // Wait for username input to be visible
     await this.usernameInput.waitFor({ state: "visible", timeout: 15000 });
   }
-
-  // async navigateToUrl(): Promise<void> {
-  //   await this.page.goto(
-  //     "https://preprod-transport-hubbleorion.hubblehox.com/",
-  //   );
-  // }
-
-  // async EnterUsername(username: string): Promise<void> {
-  //   await this.usernameInput.waitFor({ state: "visible", timeout: 10000 });
-  //   await this.usernameInput.fill(username);
-  // }
-
-  // async EnterPassword(password: string): Promise<void> {
-  //   await this.passwordInput.waitFor({ state: "visible", timeout: 10000 });
-  //   await this.passwordInput.fill(password);
-  // }
-
+  // to user url from base class --  TO DO
+  // Create a Perent method -
   async EnterUsername(username: string): Promise<void> {
     await this.usernameInput.fill(username);
   }
@@ -64,7 +51,6 @@ export class LoginPage {
   }
 
   async loggedIn(logginConfirmation: string): Promise<void> {
-    //await this.page.waitForURL(/\/hubbleorion.hubblehox.com/);
     await expect(this.loggedInConfirmation).toHaveText(logginConfirmation);
   }
 

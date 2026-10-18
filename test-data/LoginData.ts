@@ -9,4 +9,7 @@ export const LoginTestData = {
 
   UserNameFieldRequiredMessage: "⚠Username is required.",
   PasswordFieldRequiredMessage: "⚠Password is required.",
+
+  chahisnumber: "MH30YY9909MH30YY9",
+  Busnumber: "MH30YY9909",
 };
