@@ -110,12 +110,9 @@ export class BusManagement {
   async datatablecolumncount(): Promise<void> {
     const rowscount = await this.datarows;
     const totalrowscount = await rowscount.count();
-    console.log(totalrowscount);
     await expect(this.datarows).toHaveCount(10);
-    await this.rowsperpage.click();
     await this.page.getByRole("option", { name: "25" }).click();
     const aftefiltercount = await rowscount.count();
-    console.log(aftefiltercount);
     await expect(this.datarows).toHaveCount(25);
   }
 
