@@ -124,6 +124,7 @@ export class BusManagement {
     console.log(totalrowscount);
     this.rowsperpage.click();
     const rowspage = this.page.getByRole("option", { name: "25" });
+  
     await rowspage.click();
     const aftefiltercount = await rowscount.count();
     console.log(aftefiltercount);
