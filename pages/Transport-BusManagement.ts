@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { BasePage } from "../utils/BasePage";
 
-export class BusManagement {
+export class BusManagement extends BasePage {
   readonly page: Page;
   readonly transportOverview: Locator;
   readonly AddNewBusButton: Locator;
@@ -15,15 +16,17 @@ export class BusManagement {
   readonly BusNumber: Locator;
   readonly ChasisNumber: Locator;
   readonly GpsDevicePlatform: Locator;
+
+
   // fields in Bus Management screen
   readonly SearchOption: Locator;
-
   readonly datagrid: Locator;
   readonly datarows: Locator;
-
   readonly rowsperpage: Locator;
 
+  //Constructor
   constructor(page: Page) {
+    super(page)
     this.page = page;
     this.transportOverview = page.getByRole("button", {
       name: "Transport Overview",
@@ -42,19 +45,17 @@ export class BusManagement {
     this.BusNumber = page.locator("//input [@name ='bus_number' ]");
     this.ChasisNumber = page.locator("//input[@name = 'chassis_no'] ");
     this.GpsDevicePlatform = page.locator("#gps-device-platform");
-
     this.datagrid = page.getByRole("grid");
     this.datarows = page.getByRole("grid").locator(".MuiDataGrid-row");
-
-    //
     this.rowsperpage = page.locator("//div[@aria-haspopup = 'listbox']").nth(1);
-
     this.SearchOption = page.getByPlaceholder(
       "Search for Bus Number, Bus Type & Bus Capacity",
     );
   }
+
   //Functions
   async BusManagemRedirection(): Promise<void> {
+    await this.page.waitForLoadState("networkidle")
     await this.page.reload();
     await this.transportOverview.hover();
     await this.BusManagement.click();
@@ -80,15 +81,16 @@ export class BusManagement {
   }
 
   //Enters Bus Number
-  async SelectBus(BusNumber: string): Promise<void> {
-    await this.BusNumber.fill(BusNumber);
+  async SelectBus(BusNumb: string): Promise<void> {
+    await this.BusNumber.fill(BusNumb);
   }
 
   // Enter Chasis Number
-  async EnterChasisNumber(chasisnumber: string): Promise<void> {
+  async nterChasisNumber(chasisnumber: string): Promise<void> {
     await this.ChasisNumber.fill(chasisnumber);
   }
 
+  //
   async GPSDevice(SelectGPS: string) {
     await this.GpsDevicePlatform.click();
     await this.page.getByRole("option", { name: SelectGPS }).click();

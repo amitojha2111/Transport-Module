@@ -17,7 +17,7 @@ test("To check user is redirect to Bus Management", async ({ page }) => {
   await busmanagemet.Search("KA53AB0036");
 });
 
-test("test bus creation", async ({ page }) => {
+test.only("test bus creation", async ({ page }) => {
   const loginpage = new LoginPage(page);
   const busmanagemet = new BusManagement(page);
 
@@ -28,12 +28,13 @@ test("test bus creation", async ({ page }) => {
   await busmanagemet.BusManagemRedirection();
   await busmanagemet.AddNewBusbutton();
   await busmanagemet.FieldSelection("VIBGYOR Kids and High - Goregaon West");
+  console.log("Bus Number", LoginTestData.Busnumber)
   await busmanagemet.SelectBus(LoginTestData.Busnumber);
   await busmanagemet.EnterChasisNumber(LoginTestData.chahisnumber);
   await busmanagemet.GPSDevice("Neotrack");
 });
 
-test.only("get Table number", async ({ page }) => {
+test("get Table number", async ({ page }) => {
   const loginpage = new LoginPage(page);
   const busmanagemet = new BusManagement(page);
   await loginpage.navigateToUrl();

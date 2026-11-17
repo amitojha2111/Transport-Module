@@ -1,7 +1,8 @@
 import { test, Page, expect, Locator } from "@playwright/test";
+import { BasePage } from "../utils/BasePage";
 //import { BasePage } from "../utils/BasePage";
 
-export class LoginPage {
+export class LoginPage extends BasePage{
   readonly page: Page;
   readonly usernameInput: Locator;
   readonly passwordInput: Locator;
@@ -14,6 +15,7 @@ export class LoginPage {
 
   // Why use GetByRole -- It is used for Autoheal
   constructor(page: Page) {
+    super(page)
     this.page = page;
     this.usernameInput = page.locator("input[name='username']");
     this.passwordInput = page.locator("input[name='password']");
@@ -29,10 +31,13 @@ export class LoginPage {
   }
 
   async navigateToUrl(): Promise<void> {
-    await this.page.goto(
-      "https://preprod-transport-hubbleorion.hubblehox.com/",
-      { waitUntil: "domcontentloaded" }, // Add this
-    );
+
+    await this.navigateURL("https://preprod-transport-hubbleorion.hubblehox.com/")
+
+    // await this.page.goto(
+    //   "https://preprod-transport-hubbleorion.hubblehox.com/",
+    //   { waitUntil: "domcontentloaded" },
+    // );
     // Wait for username input to be visible
     await this.usernameInput.waitFor({ state: "visible", timeout: 15000 });
   }
